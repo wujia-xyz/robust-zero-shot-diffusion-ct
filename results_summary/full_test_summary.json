@@ -1,0 +1,354 @@
+{
+  "jobs": {
+    "aapm_i": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "i",
+      "count": 526,
+      "display": {
+        "psnr_2dp": "31.86",
+        "ssim_4dp": "0.8822"
+      },
+      "domain": "aapm",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 34.157892902786315,
+        "mean": 31.86122238643542,
+        "minimum": 30.7782968939016,
+        "sample_standard_deviation": 0.51743760359185,
+        "standard_error": 0.0225613516575101
+      },
+      "ssim": {
+        "maximum": 0.9126601791401074,
+        "mean": 0.8822337283264208,
+        "minimum": 0.7947625368878211,
+        "sample_standard_deviation": 0.027265718498996706,
+        "standard_error": 0.0011888418216619775
+      }
+    },
+    "aapm_ii": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "ii_c",
+      "count": 526,
+      "display": {
+        "psnr_2dp": "27.69",
+        "ssim_4dp": "0.7817"
+      },
+      "domain": "aapm",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 29.615079335732986,
+        "mean": 27.694798098298914,
+        "minimum": 26.835808008773903,
+        "sample_standard_deviation": 0.5085990593182805,
+        "standard_error": 0.022175972813544664
+      },
+      "ssim": {
+        "maximum": 0.8311732936541382,
+        "mean": 0.7816562060604296,
+        "minimum": 0.6901511155345206,
+        "sample_standard_deviation": 0.029052634443681512,
+        "standard_error": 0.0012667550593752652
+      }
+    },
+    "aapm_iii": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "iii5",
+      "count": 526,
+      "display": {
+        "psnr_2dp": "29.44",
+        "ssim_4dp": "0.8147"
+      },
+      "domain": "aapm",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 30.890061540565405,
+        "mean": 29.440050261420055,
+        "minimum": 28.598939164274775,
+        "sample_standard_deviation": 0.33922249903897483,
+        "standard_error": 0.01479080383379821
+      },
+      "ssim": {
+        "maximum": 0.854531323445007,
+        "mean": 0.8146595914486505,
+        "minimum": 0.7285561289523502,
+        "sample_standard_deviation": 0.027929075137863704,
+        "standard_error": 0.0012177655456045988
+      }
+    },
+    "aapm_iv": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "iv",
+      "count": 526,
+      "display": {
+        "psnr_2dp": "29.50",
+        "ssim_4dp": "0.8270"
+      },
+      "domain": "aapm",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 31.174713985445504,
+        "mean": 29.497242091932538,
+        "minimum": 28.23726016015862,
+        "sample_standard_deviation": 0.38455557616263847,
+        "standard_error": 0.016767419927418568
+      },
+      "ssim": {
+        "maximum": 0.8689424894813813,
+        "mean": 0.8270135951349857,
+        "minimum": 0.7294108492380763,
+        "sample_standard_deviation": 0.029590494166793546,
+        "standard_error": 0.0012902068577588892
+      }
+    },
+    "aapm_v": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "v",
+      "count": 526,
+      "display": {
+        "psnr_2dp": "31.21",
+        "ssim_4dp": "0.8720"
+      },
+      "domain": "aapm",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 32.78179992494651,
+        "mean": 31.206864915173693,
+        "minimum": 28.30264463386309,
+        "sample_standard_deviation": 0.7339122001473907,
+        "standard_error": 0.032000092606959143
+      },
+      "ssim": {
+        "maximum": 0.9062799846728397,
+        "mean": 0.8720186101770673,
+        "minimum": 0.782451891034826,
+        "sample_standard_deviation": 0.029805550298958434,
+        "standard_error": 0.0012995837507218195
+      }
+    },
+    "lodoind_i": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "i",
+      "count": 500,
+      "display": {
+        "psnr_2dp": "23.61",
+        "ssim_4dp": "0.6800"
+      },
+      "domain": "lodoind",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 25.833094655216414,
+        "mean": 23.60932482587651,
+        "minimum": 21.62928666357239,
+        "sample_standard_deviation": 1.2446257054422127,
+        "standard_error": 0.05566135367824835
+      },
+      "ssim": {
+        "maximum": 0.8038751984394299,
+        "mean": 0.6799855454909265,
+        "minimum": 0.6238738110782457,
+        "sample_standard_deviation": 0.03027329616041778,
+        "standard_error": 0.0013538629623535507
+      }
+    },
+    "lodoind_ii": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "ii_c",
+      "count": 500,
+      "display": {
+        "psnr_2dp": "20.15",
+        "ssim_4dp": "0.5638"
+      },
+      "domain": "lodoind",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 23.777405444900243,
+        "mean": 20.14880902847795,
+        "minimum": 18.57131368847042,
+        "sample_standard_deviation": 0.9169869079907907,
+        "standard_error": 0.04100890121489506
+      },
+      "ssim": {
+        "maximum": 0.7499258470253798,
+        "mean": 0.5637551310677708,
+        "minimum": 0.48579634940326705,
+        "sample_standard_deviation": 0.04321045249278223,
+        "standard_error": 0.001932430182247726
+      }
+    },
+    "lodoind_iii": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "iii5",
+      "count": 500,
+      "display": {
+        "psnr_2dp": "23.72",
+        "ssim_4dp": "0.6956"
+      },
+      "domain": "lodoind",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 25.442016100961453,
+        "mean": 23.722360236795332,
+        "minimum": 22.466922731845067,
+        "sample_standard_deviation": 0.8670504954170631,
+        "standard_error": 0.03877567695354846
+      },
+      "ssim": {
+        "maximum": 0.7967954941019393,
+        "mean": 0.6955780879688024,
+        "minimum": 0.6563281264282625,
+        "sample_standard_deviation": 0.021265995007706952,
+        "standard_error": 0.0009510442089280781
+      }
+    },
+    "lodoind_iv": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "iv",
+      "count": 500,
+      "display": {
+        "psnr_2dp": "22.27",
+        "ssim_4dp": "0.6434"
+      },
+      "domain": "lodoind",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 24.75877855784251,
+        "mean": 22.268857427868458,
+        "minimum": 20.596169524257387,
+        "sample_standard_deviation": 0.7748186248043829,
+        "standard_error": 0.03465094230591009
+      },
+      "ssim": {
+        "maximum": 0.7781522247818178,
+        "mean": 0.643414998511302,
+        "minimum": 0.5827038784837408,
+        "sample_standard_deviation": 0.028523251441218627,
+        "standard_error": 0.0012755985832376738
+      }
+    },
+    "lodoind_v": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "v",
+      "count": 500,
+      "display": {
+        "psnr_2dp": "21.70",
+        "ssim_4dp": "0.6369"
+      },
+      "domain": "lodoind",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "kavg",
+      "psnr": {
+        "maximum": 25.504359719346667,
+        "mean": 21.702849917477273,
+        "minimum": 19.745150899182587,
+        "sample_standard_deviation": 0.804354089460982,
+        "standard_error": 0.03597180844029405
+      },
+      "ssim": {
+        "maximum": 0.7983063700168974,
+        "mean": 0.6368838295422674,
+        "minimum": 0.5765468702716324,
+        "sample_standard_deviation": 0.029912310430166927,
+        "standard_error": 0.0013377191897185844
+      }
+    },
+    "rocks_100": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "100",
+      "count": 660,
+      "display": {
+        "psnr_2dp": "32.68",
+        "ssim_4dp": "0.5956"
+      },
+      "domain": "rocks",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "diff",
+      "psnr": {
+        "maximum": 39.3725214428532,
+        "mean": 32.67553597864683,
+        "minimum": 24.558100696233737,
+        "sample_standard_deviation": 2.7285009644467144,
+        "standard_error": 0.10620675599827321
+      },
+      "ssim": {
+        "maximum": 0.8353418966936819,
+        "mean": 0.595587151348524,
+        "minimum": 0.25276351327169727,
+        "sample_standard_deviation": 0.11743637920339375,
+        "standard_error": 0.004571204860799713
+      }
+    },
+    "rocks_200": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "200",
+      "count": 660,
+      "display": {
+        "psnr_2dp": "33.48",
+        "ssim_4dp": "0.6342"
+      },
+      "domain": "rocks",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "diff",
+      "psnr": {
+        "maximum": 40.46454275060697,
+        "mean": 33.47639440580856,
+        "minimum": 24.861738354480437,
+        "sample_standard_deviation": 2.941220021815032,
+        "standard_error": 0.11448683407648669
+      },
+      "ssim": {
+        "maximum": 0.8507278490071783,
+        "mean": 0.6341625814037741,
+        "minimum": 0.32318129859161193,
+        "sample_standard_deviation": 0.1081523133972081,
+        "standard_error": 0.004209823089417632
+      }
+    },
+    "rocks_60": {
+      "aggregation": "unweighted arithmetic mean over all raw test slices",
+      "configuration": "60",
+      "count": 660,
+      "display": {
+        "psnr_2dp": "32.15",
+        "ssim_4dp": "0.5733"
+      },
+      "domain": "rocks",
+      "population_definition": "all raw local test-set slices, with no development-slice exclusions",
+      "primary_estimator": "diff",
+      "psnr": {
+        "maximum": 38.60959847723288,
+        "mean": 32.14811068551184,
+        "minimum": 24.425246279997474,
+        "sample_standard_deviation": 2.572542629593832,
+        "standard_error": 0.10013608604746531
+      },
+      "ssim": {
+        "maximum": 0.8224541271417256,
+        "mean": 0.5732954810765136,
+        "minimum": 0.22131510764278176,
+        "sample_standard_deviation": 0.11987159646110192,
+        "standard_error": 0.0046659955639962
+      }
+    }
+  },
+  "population": {
+    "aapm": 526,
+    "lodoind": 500,
+    "rocks": 660
+  },
+  "run_name": "full_test_20260724_f3_1cal_v1",
+  "schema_version": 1,
+  "source": {
+    "file": "full_test_summary.json",
+    "sha256": "b2053c4e03c386553b59e292f9aef57576c5f181c564d978c2bf3b6ab81852b1"
+  },
+  "total_reconstructions": 7110
+}

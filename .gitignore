@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+.venv/
+venv/
+
+# Editors, agents, and local configuration
+.idea/
+.vscode/
+.claude/
+.codex/
+.agents/
+.env
+.env.*
+!.env.example
+
+# Data, priors, reconstructions, and runtime output
+data/
+models/
+trained/
+checkpoints/
+artifacts/
+results/
+logs/
+runs/
+cache/
+*_cache/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+*.tif
+*.tiff
+*.dcm
+
+# OS files
+.DS_Store
+Thumbs.db

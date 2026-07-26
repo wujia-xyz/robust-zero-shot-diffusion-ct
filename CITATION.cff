@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the accompanying paper."
+title: "Robust Zero-Shot Diffusion CT Reconstruction via a Closed-Form Data-Consistency Law"
+type: software
+version: 0.1.0
+date-released: 2026-07-26
+authors:
+  - family-names: Wu
+    given-names: Jia
+    email: wujiahj@126.com
+  - family-names: Liu
+    given-names: Qinghai
+  - family-names: Lou
+    given-names: Xicheng
+  - family-names: Zhang
+    given-names: Zheng
+  - family-names: Liu
+    given-names: Xiaojiang
+  - family-names: He
+    given-names: Chao
+  - family-names: Qiu
+    given-names: Weijie
+  - family-names: Xie
+    given-names: Xin
+    email: xiexin@cqupt.edu.cn
+repository-code: "https://github.com/wujia-xyz/robust-zero-shot-diffusion-ct"
+preferred-citation:
+  type: article
+  title: "Robust Zero-Shot Diffusion CT Reconstruction via a Closed-Form Data-Consistency Law"
+  authors:
+    - family-names: Wu
+      given-names: Jia
+    - family-names: Liu
+      given-names: Qinghai
+    - family-names: Lou
+      given-names: Xicheng
+    - family-names: Zhang
+      given-names: Zheng
+    - family-names: Liu
+      given-names: Xiaojiang
+    - family-names: He
+      given-names: Chao
+    - family-names: Qiu
+      given-names: Weijie
+    - family-names: Xie
+      given-names: Xin
+  journal: "IEEE Transactions on Image Processing"
+  year: 2026

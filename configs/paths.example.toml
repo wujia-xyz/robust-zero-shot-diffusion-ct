@@ -1,0 +1,15 @@
+# Copy this file to a location outside Git and replace the placeholders.
+# Data and pretrained priors are intentionally not distributed in this repo.
+
+[data]
+aapm = "/path/to/preprocessed/aapm"
+lodoind = "/path/to/preprocessed/lodoind"
+rocks = "/path/to/preprocessed/rocks"
+
+[priors]
+aapm = "/path/to/aapm/pixel-diffusion-model"
+lodoind = "/path/to/lodoind/pixel-diffusion-model"
+rocks = "/path/to/synchrotron/pixel-diffusion-model"
+
+[output]
+root = "/path/to/reconstruction/output"

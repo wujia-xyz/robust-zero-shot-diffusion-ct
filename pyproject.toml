@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robust-zero-shot-ct"
+version = "0.1.0"
+description = "Framework-independent implementation of an acquisition-conditioned data-consistency law for zero-shot diffusion CT reconstruction"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  {name = "Jia Wu", email = "wujiahj@126.com"},
+  {name = "Xin Xie", email = "xiexin@cqupt.edu.cn"},
+]
+dependencies = [
+  "numpy>=1.24,<3",
+  "scipy>=1.10,<2",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8,<9",
+]
+
+[project.urls]
+Repository = "https://github.com/wujia-xyz/robust-zero-shot-diffusion-ct"
+Issues = "https://github.com/wujia-xyz/robust-zero-shot-diffusion-ct/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]

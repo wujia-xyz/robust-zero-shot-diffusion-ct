@@ -1,0 +1,203 @@
+{
+  "c_global": 0.6268280959341184,
+  "calibration": {
+    "acquisition": "F3_1",
+    "c": 0.6268280959341184,
+    "configuration": "200",
+    "delta": 0.00806335503350648,
+    "domain": "rocks",
+    "gain": 501.28912353515625,
+    "gcap": 8.0,
+    "protocol_hash": "b9e17953cfcb0a82a1b361c6e19df68ea722b90cf7dd52fa13cc768099bff41b",
+    "role": "sole reference-assisted calibration",
+    "selection": "maximum unweighted mean full-image SSIM",
+    "sigma_n2": 0.4159043780572669,
+    "slice_indices": [
+      66,
+      198,
+      330,
+      462,
+      594
+    ],
+    "winner_to_runner_up_mean_ssim_margin": 0.0009148401609914147
+  },
+  "configurations": {
+    "aapm-i": {
+      "binds": true,
+      "delta": 0.008272124678007196,
+      "domain": "aapm",
+      "gain": 126.6,
+      "gamma_bar": 0.3,
+      "gamma_star": 0.6268280959341184,
+      "gcap_star": 0.004951248783049908,
+      "realized_terminal_gcap": 0.004951248783049908,
+      "schedule_endpoint": 2999.9999999999995,
+      "sigma_n2": 0.0
+    },
+    "aapm-ii": {
+      "binds": false,
+      "delta": 0.008272124678007196,
+      "domain": "aapm",
+      "gain": 87.9,
+      "gamma_bar": 0.1,
+      "gamma_star": 525807.4333618189,
+      "gcap_star": 5981.88206327439,
+      "realized_terminal_gcap": 1000.0,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 57.4
+    },
+    "aapm-iii": {
+      "binds": false,
+      "delta": 0.008272124678007196,
+      "domain": "aapm",
+      "gain": 203.4,
+      "gamma_bar": 0.1,
+      "gamma_star": 1046118.0014997189,
+      "gcap_star": 5143.1563495561395,
+      "realized_terminal_gcap": 1000.0,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 114.2
+    },
+    "aapm-iv": {
+      "binds": false,
+      "delta": 0.008272124678007196,
+      "domain": "aapm",
+      "gain": 203.4,
+      "gamma_bar": 0.1,
+      "gamma_star": 523059.31416390743,
+      "gcap_star": 2571.5797156534286,
+      "realized_terminal_gcap": 1000.0,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 57.1
+    },
+    "aapm-v": {
+      "binds": true,
+      "delta": 0.008272124678007196,
+      "domain": "aapm",
+      "gain": 123.5,
+      "gamma_bar": 0.3,
+      "gamma_star": 0.6268280959341184,
+      "gcap_star": 0.00507553114116695,
+      "realized_terminal_gcap": 0.00507553114116695,
+      "schedule_endpoint": 2999.9999999999995,
+      "sigma_n2": 0.0
+    },
+    "lodoind-i": {
+      "binds": true,
+      "delta": 0.009483038223546689,
+      "domain": "lodoind",
+      "gain": 126.6,
+      "gamma_bar": 0.3,
+      "gamma_star": 0.6268280959341184,
+      "gcap_star": 0.004951248783049908,
+      "realized_terminal_gcap": 0.004951248783049908,
+      "schedule_endpoint": 2999.9999999999995,
+      "sigma_n2": 0.0
+    },
+    "lodoind-ii": {
+      "binds": true,
+      "delta": 0.009483038223546689,
+      "domain": "lodoind",
+      "gain": 87.9,
+      "gamma_bar": 0.1,
+      "gamma_star": 25330.81261325244,
+      "gcap_star": 288.17761789820753,
+      "realized_terminal_gcap": 288.17761789820753,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 3.634
+    },
+    "lodoind-iii": {
+      "binds": true,
+      "delta": 0.009483038223546689,
+      "domain": "lodoind",
+      "gain": 203.4,
+      "gamma_bar": 0.1,
+      "gamma_star": 49831.52891342446,
+      "gcap_star": 244.9927675192943,
+      "realized_terminal_gcap": 244.9927675192943,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 7.149
+    },
+    "lodoind-iv": {
+      "binds": true,
+      "delta": 0.009483038223546689,
+      "domain": "lodoind",
+      "gain": 203.4,
+      "gamma_bar": 0.1,
+      "gamma_star": 24912.5927048569,
+      "gcap_star": 122.48079009270845,
+      "realized_terminal_gcap": 122.48079009270845,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 3.574
+    },
+    "lodoind-v": {
+      "binds": true,
+      "delta": 0.009483038223546689,
+      "domain": "lodoind",
+      "gain": 123.5,
+      "gamma_bar": 0.3,
+      "gamma_star": 0.6268280959341184,
+      "gcap_star": 0.00507553114116695,
+      "realized_terminal_gcap": 0.00507553114116695,
+      "schedule_endpoint": 2999.9999999999995,
+      "sigma_n2": 0.0
+    },
+    "rocks-100": {
+      "binds": true,
+      "delta": 0.00806335503350648,
+      "domain": "rocks",
+      "gain": 279.3,
+      "gamma_bar": 0.1,
+      "gamma_star": 2189.107657784962,
+      "gcap_star": 7.837836225510069,
+      "realized_terminal_gcap": 7.837836225510069,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 0.227
+    },
+    "rocks-200": {
+      "binds": true,
+      "delta": 0.00806335503350648,
+      "domain": "rocks",
+      "gain": 501.9,
+      "gamma_bar": 0.1,
+      "gamma_star": 2189.107657784962,
+      "gcap_star": 4.3616410794679465,
+      "realized_terminal_gcap": 4.3616410794679465,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 0.227
+    },
+    "rocks-60": {
+      "binds": true,
+      "delta": 0.00806335503350648,
+      "domain": "rocks",
+      "gain": 190.0,
+      "gamma_bar": 0.1,
+      "gamma_star": 2189.107657784962,
+      "gcap_star": 11.521619251499802,
+      "realized_terminal_gcap": 11.521619251499802,
+      "schedule_endpoint": 1000.0,
+      "sigma_n2": 0.227
+    }
+  },
+  "kappa": 1.0,
+  "law": "gcap*=c*(sigma_n^2+(kappa*delta)^2)/(delta^2*GAIN)",
+  "method": "Robust Zero-Shot Diffusion CT Reconstruction",
+  "schedule": {
+    "gamma_bar_rule": {
+      "sigma_n2=0": 0.3,
+      "sigma_n2>0": 0.1
+    },
+    "medical_chains": 8,
+    "positive_noise_levels": 100,
+    "power": 7,
+    "proximal_cg_iterations": 6,
+    "rocks_chains": 4,
+    "sigma_final": 0.0,
+    "sigma_min": 0.01
+  },
+  "schema_version": 1,
+  "source": {
+    "file": "phase0_law_parameters_f3_1_20260724.json",
+    "sha256": "f7ec8b8eb2aedb1bbee5edb9b052d085b28cc3feed98376a513707078bcc4344"
+  }
+}

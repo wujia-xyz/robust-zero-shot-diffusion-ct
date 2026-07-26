@@ -1,0 +1,3 @@
+# Framework-independent law, reliability mask, and numerical core.
+numpy>=1.24,<3
+scipy>=1.10,<2
