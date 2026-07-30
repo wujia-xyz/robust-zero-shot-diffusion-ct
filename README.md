@@ -1,11 +1,10 @@
-# Robust Zero-Shot Diffusion CT Reconstruction
+# Acquisition-Adaptive Data Consistency for Zero-Shot Diffusion CT Reconstruction
 
 Official pre-publication code package for:
 
-> **Robust Zero-Shot Diffusion CT Reconstruction via a Closed-Form
-> Data-Consistency Law**
-> Jia Wu, Qinghai Liu, Xicheng Lou, Zheng Zhang, Xiaojiang Liu, Chao He,
-> Weijie Qiu, and Xin Xie
+> **Acquisition-Adaptive Data Consistency for Zero-Shot Diffusion CT
+> Reconstruction**
+> Jia Wu, Xiaoming Jiang, Hongying Meng, and Zhangyong Li
 
 The method adapts the data-consistency trajectory of a zero-shot diffusion CT
 reconstructor to the acquisition at hand. After one sampler-level calibration,
@@ -206,13 +205,11 @@ are stored in
 [`results_summary/full_test_summary.json`](results_summary/full_test_summary.json).
 The summary covers 7,110 reconstructed slices.
 
-The repository also retains the host-neutral mechanism and compute-ablation
+The repository also retains the host-neutral validation and compute-ablation
 figures used to audit the frozen protocol:
 
 <p align="center">
-  <img src="assets/method_mechanism.png" width="430"
-       alt="Mechanism of the acquisition-conditioned data-consistency law">
-  <img src="assets/compute_ablation.png" width="430"
+  <img src="assets/compute_ablation.png" width="720"
        alt="Chain-count and conjugate-gradient compute ablation">
 </p>
 
@@ -226,7 +223,7 @@ and operator gain.
 
 The repository does not claim to make controlled medical data or third-party
 checkpoints freely redistributable. It also does not relabel third-party source
-code as part of this method. The current private release therefore keeps the
+code as part of this method. The release therefore keeps the
 framework-independent original implementation separate from DM4CT.
 
 ## Citation
@@ -235,9 +232,9 @@ The paper is under submission. Until bibliographic metadata is final, use the
 entry in [`CITATION.cff`](CITATION.cff). A BibTeX entry with the DOI and final
 page information will be added after publication.
 
-## License status
+## License
 
-This is a private pre-publication release. See
-[`LICENSE_PENDING.md`](LICENSE_PENDING.md) and [`NOTICE.md`](NOTICE.md). Select
-an explicit software license and complete the third-party notice review before
-changing the GitHub repository to public.
+The original software in this repository is released under the
+[MIT License](LICENSE). Data, pretrained models, and external software linked
+from this repository remain subject to their respective terms. See
+[`NOTICE.md`](NOTICE.md) for the redistribution boundary.

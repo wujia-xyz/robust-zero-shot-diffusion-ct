@@ -1,8 +1,8 @@
 # Notice
 
-Copyright © 2026 the authors of *Robust Zero-Shot Diffusion CT
-Reconstruction via a Closed-Form Data-Consistency Law*. All rights reserved
-unless a later release states otherwise.
+Copyright © 2026 the authors of *Acquisition-Adaptive Data Consistency for
+Zero-Shot Diffusion CT Reconstruction*. The original software in this
+repository is released under the MIT License.
 
 This repository is a pre-publication research-code package. It contains an
 original, framework-independent implementation of the acquisition-conditioned

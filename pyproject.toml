@@ -5,12 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "robust-zero-shot-ct"
 version = "0.1.0"
-description = "Framework-independent implementation of an acquisition-conditioned data-consistency law for zero-shot diffusion CT reconstruction"
+description = "Framework-independent implementation of acquisition-adaptive data consistency for zero-shot diffusion CT reconstruction"
 readme = "README.md"
+license = {file = "LICENSE"}
 requires-python = ">=3.10"
 authors = [
   {name = "Jia Wu", email = "wujiahj@126.com"},
-  {name = "Xin Xie", email = "xiexin@cqupt.edu.cn"},
+  {name = "Xiaoming Jiang", email = "jiangxm@cqupt.edu.cn"},
+  {name = "Hongying Meng", email = "hongying.meng@brunel.ac.uk"},
+  {name = "Zhangyong Li", email = "lizy@cqupt.edu.cn"},
 ]
 dependencies = [
   "numpy>=1.24,<3",
@@ -19,6 +22,7 @@ dependencies = [
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
