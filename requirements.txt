@@ -1,3 +1,6 @@
-# Framework-independent law, reliability mask, and numerical core.
+# Framework-independent controller, reliability mask, and numerical core.
 numpy>=1.24,<3
 scipy>=1.10,<2
+
+# Install the axial/triplet implementation with:
+# python -m pip install -e ".[axial]"

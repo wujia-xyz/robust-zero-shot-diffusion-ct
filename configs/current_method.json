@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "method": "Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT Reconstruction",
+  "controller": {
+    "sampler_scale_c": 0.6268280959341184,
+    "denominator_epsilon": 1e-08,
+    "normalized_cap_formula": "g_cap = c * (1 + sigma_n2 / sigma_n0_2) / GAIN",
+    "prior_weight_formula": "gamma_t = GAIN * min(gamma_bar / (sigma_t^2 + 1e-8), g_cap)",
+    "rocks_cap_scale": 0.625
+  },
+  "axial_refiner": {
+    "architecture": "AxialCenterX0Refiner",
+    "parameters": 5984,
+    "width": 32,
+    "timestep_embedding_dimension": 32,
+    "output": "center normalized-x0 residual",
+    "checkpoint_sha256": "538cb31a0bc041b99e1cff7f6da6a9d4eb74252c08ca70e18b86f0653f39905a",
+    "ema_state_sha256": "1392be4b842ce8a978f5985614bfdaba9cef82b2445dc2a84eeb0206a7b27f95"
+  },
+  "sampler": {
+    "stochastic_trajectories": 1,
+    "positive_karras_levels": 100,
+    "karras_rho": 7,
+    "sigma_min": 0.01,
+    "terminal_sigma": 0.0,
+    "proximal_cg_iterations": 6,
+    "transition": "independent own-slice stochastic re-noising",
+    "interior_state_count": 3,
+    "boundary_state_count": 1,
+    "retained_state": "center"
+  },
+  "prior_schedulers": {
+    "ddpm_steps": 1000,
+    "beta_start": 0.0001,
+    "beta_end": 0.02,
+    "prediction_type": "epsilon",
+    "alpha_cumprod_float32_sha256": "b5555536933367c4ad73b4e972e1701b8cf631f368d370f1f05c23c5881f1994",
+    "sigma_ddpm_float32_sha256": "60702fcc3fd67c498447885c770e265b18a25635bb408d4e61e7e7e23d8de680",
+    "karras_101_cuda_float32_sha256": "1b974f1bbd09a219bae8300b2b7a28ba092d4683a0f3531e61cfaeaf63914e17"
+  },
+  "operating_points": {
+    "aapm-i": {
+      "gain": 126.5821533203125,
+      "gamma_bar": 0.3,
+      "g_cap": 0.004951248783049908,
+      "cap_active": true
+    },
+    "aapm-ii": {
+      "gain": 87.87004852294922,
+      "gamma_bar": 0.1,
+      "g_cap": 5981.88206327439,
+      "cap_active": false
+    },
+    "aapm-iii": {
+      "gain": 203.44760131835938,
+      "gamma_bar": 0.1,
+      "g_cap": 5143.1563495561395,
+      "cap_active": false
+    },
+    "aapm-iv": {
+      "gain": 203.44760131835938,
+      "gamma_bar": 0.1,
+      "g_cap": 2571.5797156534286,
+      "cap_active": false
+    },
+    "aapm-v": {
+      "gain": 123.50544738769531,
+      "gamma_bar": 0.3,
+      "g_cap": 0.00507553114116695,
+      "cap_active": true
+    },
+    "lodoind-i": {
+      "gain": 126.5821533203125,
+      "gamma_bar": 0.3,
+      "g_cap": 0.004951248783049908,
+      "cap_active": true
+    },
+    "lodoind-ii": {
+      "gain": 87.87004852294922,
+      "gamma_bar": 0.1,
+      "g_cap": 288.17761789820753,
+      "cap_active": true
+    },
+    "lodoind-iii": {
+      "gain": 203.44760131835938,
+      "gamma_bar": 0.1,
+      "g_cap": 244.9927675192943,
+      "cap_active": true
+    },
+    "lodoind-iv": {
+      "gain": 203.44760131835938,
+      "gamma_bar": 0.1,
+      "g_cap": 122.48079009270845,
+      "cap_active": true
+    },
+    "lodoind-v": {
+      "gain": 123.50544738769531,
+      "gamma_bar": 0.3,
+      "g_cap": 0.00507553114116695,
+      "cap_active": true
+    },
+    "rocks-200": {
+      "gain": 501.8719177246094,
+      "gamma_bar": 0.1,
+      "g_cap": 2.7260256746674667,
+      "cap_active": true
+    },
+    "rocks-100": {
+      "gain": 279.30352783203125,
+      "gamma_bar": 0.1,
+      "g_cap": 4.898647640943793,
+      "cap_active": true
+    },
+    "rocks-60": {
+      "gain": 190.0240478515625,
+      "gamma_bar": 0.1,
+      "g_cap": 7.201012032187376,
+      "cap_active": true
+    }
+  }
+}

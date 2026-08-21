@@ -1,13 +1,14 @@
 # Notice
 
-Copyright © 2026 the authors of *Acquisition-Adaptive Data Consistency for
-Zero-Shot Diffusion CT Reconstruction*. The original software in this
+Copyright © 2026 the authors of *Acquisition-Conditioned Axial Prior Refinement
+for Zero-Shot Diffusion CT Reconstruction*. The original software in this
 repository is released under the MIT License.
 
 This repository is a pre-publication research-code package. It contains an
-original, framework-independent implementation of the acquisition-conditioned
-data-consistency law, proximal conjugate-gradient primitives, reliability-mask
-construction, and release validation tools.
+original implementation of the acquisition-conditioned controller, compact
+axial x0 refiner, two-noise-scale bridge, three-state own-slice sampler,
+proximal conjugate-gradient primitives, reliability-mask construction, and
+release validation tools.
 
 The repository does **not** redistribute:
 
@@ -16,6 +17,7 @@ The repository does **not** redistribute:
 - the LoDoInd data;
 - the measured synchrotron Rocks data;
 - pretrained diffusion checkpoints;
+- the trained axial-refiner checkpoint;
 - reconstructed test images or internal experiment caches.
 
 Those resources remain governed by their respective authors, repositories,

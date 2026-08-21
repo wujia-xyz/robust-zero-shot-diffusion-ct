@@ -7,4 +7,5 @@ dependencies:
   - scipy>=1.10
   - pip
   - pip:
-      - pytest>=8,<9
+      - torch>=2.1
+      - pytest>=8,<10

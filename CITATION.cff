@@ -1,9 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this code, please cite the accompanying paper."
-title: "Acquisition-Adaptive Data Consistency for Zero-Shot Diffusion CT Reconstruction"
+title: "Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT Reconstruction"
 type: software
-version: 0.1.0
-date-released: 2026-07-30
+version: 0.2.0
+date-released: 2026-08-21
 authors:
   - family-names: Wu
     given-names: Jia
@@ -14,13 +14,16 @@ authors:
   - family-names: Meng
     given-names: Hongying
     email: hongying.meng@brunel.ac.uk
+  - family-names: Luo
+    given-names: Yamei
+    email: luoyamei@swmu.edu.cn
   - family-names: Li
     given-names: Zhangyong
     email: lizy@cqupt.edu.cn
 repository-code: "https://github.com/wujia-xyz/robust-zero-shot-diffusion-ct"
 preferred-citation:
   type: article
-  title: "Acquisition-Adaptive Data Consistency for Zero-Shot Diffusion CT Reconstruction"
+  title: "Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT Reconstruction"
   authors:
     - family-names: Wu
       given-names: Jia
@@ -28,7 +31,9 @@ preferred-citation:
       given-names: Xiaoming
     - family-names: Meng
       given-names: Hongying
+    - family-names: Luo
+      given-names: Yamei
     - family-names: Li
       given-names: Zhangyong
-  journal: "IEEE Transactions on Medical Imaging"
+  journal: "IEEE Transactions on Image Processing"
   year: 2026
