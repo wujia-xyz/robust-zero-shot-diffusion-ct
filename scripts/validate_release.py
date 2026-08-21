@@ -89,6 +89,8 @@ def validate_files() -> list[str]:
             content = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
+        if path.suffix.lower() == ".md" and "\t" in content:
+            errors.append(f"{relative}: contains a tab that may corrupt Markdown")
         for pattern in FORBIDDEN_PATH_PATTERNS:
             if pattern.search(content):
                 errors.append(f"{relative}: contains a host-specific path")
@@ -99,6 +101,21 @@ def validate_files() -> list[str]:
             if pattern.search(content):
                 errors.append(f"{relative}: contains stale internal/method naming")
     return errors
+
+
+def validate_readme() -> list[str]:
+    content = (ROOT / "README.md").read_text(encoding="utf-8")
+    required = (
+        r"\(\mathcal X_t=\{x_{z-1,t},x_{z,t},x_{z+1,t}\}\)",
+        r"\(\epsilon_{\theta,j,t}\)",
+        "results_summary/current_method_summary.json",
+        "configs/current_method.json",
+    )
+    return [
+        f"README.md: missing required current-method expression {item}"
+        for item in required
+        if item not in content
+    ]
 
 
 def read_json(relative: str) -> dict:
@@ -194,7 +211,7 @@ def validate_python_api() -> list[str]:
         import robust_ct
     except Exception as error:  # pragma: no cover - release diagnostic
         return [f"robust_ct import failed: {error}"]
-    if robust_ct.__version__ != "0.2.0":
+    if robust_ct.__version__ != "0.2.1":
         errors.append("robust_ct: package version drifted")
     if robust_ct.AXIAL_AVAILABLE:
         refiner = robust_ct.AxialCenterX0Refiner()
@@ -206,6 +223,7 @@ def validate_python_api() -> list[str]:
 def main() -> int:
     errors = (
         validate_files()
+        + validate_readme()
         + validate_method_config()
         + validate_results()
         + validate_python_api()

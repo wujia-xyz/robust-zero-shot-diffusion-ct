@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this code, please cite the accompanying paper."
 title: "Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT Reconstruction"
 type: software
-version: 0.2.0
+version: 0.2.1
 date-released: 2026-08-21
 authors:
   - family-names: Wu
