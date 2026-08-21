@@ -11,5 +11,8 @@ aapm = "/path/to/aapm/pixel-diffusion-model"
 lodoind = "/path/to/lodoind/pixel-diffusion-model"
 rocks = "/path/to/synchrotron/pixel-diffusion-model"
 
+[refiner]
+checkpoint = "/path/to/axial-x0-refiner-checkpoint.pt"
+
 [output]
 root = "/path/to/reconstruction/output"

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "robust-zero-shot-ct"
-version = "0.1.0"
-description = "Framework-independent implementation of acquisition-adaptive data consistency for zero-shot diffusion CT reconstruction"
+version = "0.2.0"
+description = "Acquisition-conditioned axial prior refinement for zero-shot diffusion CT reconstruction"
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
@@ -13,6 +13,7 @@ authors = [
   {name = "Jia Wu", email = "wujiahj@126.com"},
   {name = "Xiaoming Jiang", email = "jiangxm@cqupt.edu.cn"},
   {name = "Hongying Meng", email = "hongying.meng@brunel.ac.uk"},
+  {name = "Yamei Luo", email = "luoyamei@swmu.edu.cn"},
   {name = "Zhangyong Li", email = "lizy@cqupt.edu.cn"},
 ]
 dependencies = [
@@ -32,7 +33,10 @@ classifiers = [
 
 [project.optional-dependencies]
 test = [
-  "pytest>=8,<9",
+  "pytest>=8,<10",
+]
+axial = [
+  "torch>=2.1",
 ]
 
 [project.urls]

@@ -1,89 +1,97 @@
-# Acquisition-Adaptive Data Consistency for Zero-Shot Diffusion CT Reconstruction
+# Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT Reconstruction
 
-Official pre-publication code package for:
+Official code repository for:
 
-> **Acquisition-Adaptive Data Consistency for Zero-Shot Diffusion CT
+> **Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT
 > Reconstruction**
-> Jia Wu, Xiaoming Jiang, Hongying Meng, and Zhangyong Li
+>
+> Jia Wu, Xiaoming Jiang, Hongying Meng, Yamei Luo, and Zhangyong Li
 
-The method adapts the data-consistency trajectory of a zero-shot diffusion CT
-reconstructor to the acquisition at hand. After one sampler-level calibration,
-the prior-anchor cap is computed from three quantities available before
-reconstruction: a sinogram-derived noise proxy, a stored prior-error statistic,
-and the response scale of the CT operator. No configuration-specific cap sweep
-is performed at test time.
+The method combines an acquisition-conditioned data-consistency controller
+with a compact axial refiner. It uses a frozen two-dimensional diffusion prior,
+requires no paired projection/target training data, and reconstructs every
+interior location through three physical states with three separate
+measurements. The axial refiner changes only the center prior anchor, and only
+the center reconstruction is retained.
 
-This repository is deliberately smaller than the internal research workspace.
-It contains the original method core, protocol-locked parameters, tests, and
-host-neutral result summaries. Patient data, industrial data, measured
-synchrotron data, pretrained priors, reconstructed images, baseline caches,
-logs, and private paper material are not included.
+## Method
 
-## Method in one view
+For an interior center location (z), the reverse state is
+(mathcal X_t=\{x_{z-1,t},x_{z,t},x_{z+1,t}\}). The frozen 2-D prior predicts
+(epsilon_{	heta,j,t}) for each (j\in\{z-1,z,z+1\}). Two clean-image
+coordinates are then formed:
 
-Let \(\sigma_n^2\) denote the acquisition noise proxy, \(\delta\) the stored
-terminal denoising error for the domain prior, and `GAIN` the response of the
-forward operator to a fixed-seed Gaussian probe. The normalized cap is
+\[
+\widehat x^{2\mathrm D}_{0,j,t}
+=x_{j,t}-\sigma_{\mathrm{DDPM},t}\epsilon_{\theta,j,t},
+\qquad
+D^{2\mathrm D}_{j,t}
+=x_{j,t}-s_t\epsilon_{\theta,j,t}.
+\]
+
+The first is the Tweedie estimate used by the axial refiner; the second is the
+anchor used by the continuous Karras sampler. The 5,984-parameter refiner
+receives the normalized Tweedie estimates, noise-prediction features, and DDPM
+timestep from all three states. It predicts a center-only normalized-x0
+residual. After conversion to physical image units, the center anchor becomes
+
+\[
+\widetilde D_{z,t}
+=D^{2\mathrm D}_{z,t}
++\frac{s_t}{\sigma_{\mathrm{DDPM},t}}\Delta x_{0,t},
+\]
+
+while the neighboring anchors remain unchanged.
+
+The acquisition-conditioned controller supplies one coefficient shared by the
+three own-slice systems:
 
 \[
 g_{\mathrm{cap}}
-=
-\frac{c}{\mathrm{GAIN}}
-\left(
-1+\frac{\sigma_n^2}{\delta^2}
-\right).
-\]
-
-The paper writes the unit floor in the equivalent form
-
-\[
-g_{\mathrm{cap}}
-=
-\frac{c\,[\sigma_n^2+(\kappa\delta)^2]}
-{\delta^2\,\mathrm{GAIN}},
-\qquad \kappa=1.
-\]
-
-At noise level \(\sigma_t\), the operator-scale proximal weight is
-
-\[
+=\frac{c}{\mathrm{GAIN}}\left(1+\frac{\sigma_n^2}{\sigma_{n,0}^2}\right),
+\qquad
 \gamma_t
-=
-\mathrm{GAIN}
-\min\!\left(
-\frac{\bar{\gamma}}{\sigma_t^2+\epsilon},
-g_{\mathrm{cap}}
-\right).
+=\mathrm{GAIN}\min\left\{
+\frac{\bar\gamma}{s_t^2+10^{-8}},g_{\mathrm{cap}}
+\right\}.
 \]
 
-The clean diffusion estimate is then coupled to the measurement by a
-warm-started proximal conjugate-gradient update. A separate detector-column
-reliability mask removes only columns detected as corrupted. The mask is fixed
-throughout the reverse trajectory.
+Each physical state is updated with its own measurement, operator, and
+reliability matrix:
 
-The frozen release uses `c = 0.6268280959341184`, calibrated on five slices from
-the independent Rocks F3_1 acquisition. Each image domain uses its own
-clean-image diffusion prior; the sampler-level factor is shared.
+\[
+x^{\mathrm{prox}}_{j,t}
+=\arg\min_x\frac{1}{2}
+\lVert W_j^{1/2}(A_jx-\widetilde y_{j,t})\rVert_2^2
++\frac{\gamma_t}{2}\lVert x-D_{j,t}\rVert_2^2.
+\]
 
-## What is included
+Independent noise is added to form the next three reverse states. At volume
+boundaries, the implementation uses a true single-state path and bypasses the
+axial refiner.
+
+## Repository contents
 
 ```text
-src/robust_ct/                 framework-independent method core
-configs/law_f3_1.json          frozen law, schedule, and operating states
-configs/paths.example.toml     local data/model path template
-results_summary/               host-neutral complete-test statistics
-scripts/                       artifact export and validation utilities
-tests/                         formula, CG, mask, schedule, and sampler tests
+src/robust_ct/axial.py       axial x0 refiner and two-sigma bridge
+src/robust_ct/triplet.py     triplet prior, own-slice DC, and boundary sampler
+src/robust_ct/law.py         acquisition-conditioned controller
+src/robust_ct/proximal.py    NumPy proximal conjugate-gradient solver
+src/robust_ct/reliability.py detector-column reliability mask
+src/robust_ct/schedule.py    Karras and controller schedules
+configs/current_method.json  current architecture and operating points
+results_summary/             complete-volume descriptive statistics
+scripts/                     result export and public-release validation
+tests/                       numerical and method-contract tests
 ```
 
-The core is expressed through NumPy callables for the forward operator,
-adjoint, and denoiser. It can therefore be connected to ASTRA, torch-radon,
-tomosipo, or another CT backend without copying a third-party sampler into this
-repository.
+The CT interfaces are callback based. The same method core can therefore be
+connected to ASTRA, torch-radon, tomosipo, or another matched projection
+backend without embedding third-party sampler code in this repository.
 
 ## Installation
 
-Python 3.10–3.12 is supported for the framework-independent core.
+The controller and NumPy numerical core require Python 3.10 or later:
 
 ```bash
 git clone https://github.com/wujia-xyz/robust-zero-shot-diffusion-ct.git
@@ -92,149 +100,119 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -e ".[test]"
-python -m pytest
 ```
 
-The supplied `environment.yml` provides the equivalent small Conda
-environment. A full CT experiment additionally needs the reconstruction
-backend and diffusion framework used by the caller.
+Install the complete axial/triplet implementation with PyTorch support:
 
-## Quick numerical check
+```bash
+python -m pip install -e ".[test,axial]"
+python -m pytest
+python scripts/validate_release.py
+```
 
-The following example recomputes the frozen Rocks-60 cap:
+The supplied `environment.yml` provides an equivalent Conda environment.
+
+## Core API
+
+The acquisition-conditioned coefficient can be evaluated independently of the
+CT backend:
 
 ```python
 from robust_ct import compute_normalized_cap
+from robust_ct.triplet import controller_weight
 
-g_cap = compute_normalized_cap(
-    noise_variance=0.227,
-    prior_error=0.00806335503350648,
-    gain=190.0,
-    calibration_factor=0.6268280959341184,
-)
-print(g_cap)  # 11.521619251499802
-```
-
-The exact frozen values for all acquisitions are in
-[`configs/law_f3_1.json`](configs/law_f3_1.json).
-
-<p align="center">
-  <img src="assets/law_validation.png" width="920"
-       alt="Validation of the acquisition-conditioned cap law">
-</p>
-
-## Connecting the law to a diffusion sampler
-
-For each domain, load the corresponding clean-image prior and construct the
-domain-specific denoiser. For a new acquisition:
-
-1. Estimate the measurement noise proxy from the sinogram.
-2. Reuse the domain's stored terminal prior error \(\delta\).
-3. Measure the operator `GAIN` with the fixed-seed probe.
-4. compute `g_cap` once, before the reverse process;
-5. at every reverse level, cap the annealed proximal weight;
-6. apply the warm-started proximal-CG update and continue the standard
-   re-noising transition.
-
-In code, the central update has the following structure:
-
-```python
 g_cap = compute_normalized_cap(
     noise_variance=sigma_n2,
-    prior_error=delta,
+    prior_error=sigma_n0,
     gain=gain,
     calibration_factor=c,
 )
-
-gamma_t = gain * min(gamma_bar / (sigma_t**2 + eps), g_cap)
-x0_prox = proximal_cg(
-    forward=forward,
-    adjoint=adjoint,
-    measurement=y,
-    prior_center=x0_hat,
-    prior_weight=gamma_t,
-    iterations=6,
-    weights=detector_weights,
+gamma_t = controller_weight(
+    sigma_schedule=sigma_t,
+    gamma_bar=gamma_bar,
+    g_cap=g_cap,
+    gain=gain,
 )
 ```
 
-The package also provides a callback-based reference sampler. It demonstrates
-the complete method without fixing a particular diffusion-model library or CT
-operator implementation.
+The axial module exposes the exact released architecture and the bridge between
+the DDPM and Karras noise coordinates:
+
+```python
+from robust_ct.axial import AxialCenterX0Refiner, X0ToEpsilonResidualBridge
+
+refiner = AxialCenterX0Refiner()
+refiner.load_state_dict(refiner_state)
+refiner.eval().requires_grad_(False)
+
+bridge = X0ToEpsilonResidualBridge(
+    refiner,
+    sigma_ddpm,
+    lower=image_lower,
+    upper=image_upper,
+).eval().requires_grad_(False)
+```
+
+`sample_triplet` accepts this bridge, the frozen 2-D prior callback, three own
+measurements, and three single-slice DC callbacks. `sample_center_only`
+implements the endpoint path without constructing artificial neighbors.
+`BoundedRankOneObservationUpdate` implements the measured-data detector-profile
+update used for Rocks.
+
+The current operating points, architecture hashes, 100-level sampler settings,
+and six-CG update are recorded in
+[`configs/current_method.json`](configs/current_method.json).
 
 ## Data and pretrained priors
 
-The experiments follow the DM4CT data definitions and use the original
-domain-specific clean-image priors. Download each resource from its official
-host and follow its terms of use.
+The experiments use the data definitions and clean-image priors from DM4CT.
+Obtain each resource from its official host and follow its terms of use.
 
-| Domain | Data | Pixel-space prior |
+| Domain | Data | Pixel-space diffusion prior |
 |---|---|---|
-| Medical CT | [AAPM Low Dose CT Grand Challenge](https://www.aapm.org/grandchallenge/lowdosect/) | [jiayangshi/lodochallenge_pixel_diffusion](https://huggingface.co/jiayangshi/lodochallenge_pixel_diffusion) |
-| Industrial CT | [LoDoInd](https://zenodo.org/records/10391412) | [jiayangshi/lodoind_pixel_diffusion](https://huggingface.co/jiayangshi/lodoind_pixel_diffusion) |
-| Synchrotron CT | [Rocks](https://zenodo.org/records/15420527) | [jiayangshi/synchrotron_pixel_diffusion](https://huggingface.co/jiayangshi/synchrotron_pixel_diffusion) |
+| AAPM | [Low Dose CT Grand Challenge](https://www.aapm.org/grandchallenge/lowdosect/) | [lodochallenge_pixel_diffusion](https://huggingface.co/jiayangshi/lodochallenge_pixel_diffusion) |
+| LoDoInd | [LoDoInd](https://zenodo.org/records/10391412) | [lodoind_pixel_diffusion](https://huggingface.co/jiayangshi/lodoind_pixel_diffusion) |
+| Rocks | [Synchrotron Rocks](https://zenodo.org/records/15420527) | [synchrotron_pixel_diffusion](https://huggingface.co/jiayangshi/synchrotron_pixel_diffusion) |
 
-The comparison protocol and baseline samplers are provided by
-[DM4CT](https://github.com/DM4CT/DM4CT). This repository does not duplicate the
-ten comparison samplers.
+The comparison protocol and external reconstruction methods are available from
+[DM4CT](https://github.com/DM4CT/DM4CT). This repository contains the original
+method implementation but does not redistribute controlled data, third-party
+prior weights, the trained axial-refiner checkpoint, or external baseline
+implementations. `configs/paths.example.toml` shows the expected local path
+layout, and `configs/current_method.json` records the refiner checkpoint hashes.
 
-## Frozen complete-test results
+## Complete-volume results
 
-The reported values below are unweighted means over every raw test slice:
-526 AAPM slices, 500 LoDoInd slices, and 660 Rocks slices. AAPM and LoDoInd use
-an eight-chain image average; Rocks uses four chains.
+The following values are the current one-trajectory results reported in the
+paper. They are unweighted means over every image in each evaluation volume.
 
-| Domain | Configuration | Slices | PSNR | SSIM |
+| Domain | Configuration | Count | PSNR (dB) | SSIM |
 |---|---:|---:|---:|---:|
-| AAPM | i | 526 | 31.86 | 0.8822 |
-| AAPM | ii | 526 | 27.69 | 0.7817 |
-| AAPM | iii | 526 | 29.44 | 0.8147 |
-| AAPM | iv | 526 | 29.50 | 0.8270 |
-| AAPM | v | 526 | 31.21 | 0.8720 |
-| LoDoInd | i | 500 | 23.61 | 0.6800 |
-| LoDoInd | ii | 500 | 20.15 | 0.5638 |
-| LoDoInd | iii | 500 | 23.72 | 0.6956 |
-| LoDoInd | iv | 500 | 22.27 | 0.6434 |
-| LoDoInd | v | 500 | 21.70 | 0.6369 |
-| Rocks | 200 views | 660 | 33.48 | 0.6342 |
-| Rocks | 100 views | 660 | 32.68 | 0.5956 |
-| Rocks | 60 views | 660 | 32.15 | 0.5733 |
+| AAPM | i | 526 | 31.74 | 0.87 |
+| AAPM | ii | 526 | 27.74 | 0.78 |
+| AAPM | iii | 526 | 29.69 | 0.82 |
+| AAPM | iv | 526 | 29.42 | 0.82 |
+| AAPM | v | 526 | 31.06 | 0.86 |
+| LoDoInd | i | 500 | 23.33 | 0.66 |
+| LoDoInd | ii | 500 | 19.98 | 0.55 |
+| LoDoInd | iii | 500 | 23.44 | 0.68 |
+| LoDoInd | iv | 500 | 22.15 | 0.63 |
+| LoDoInd | v | 500 | 21.48 | 0.61 |
+| Rocks | 200 views | 660 | 33.00 | 0.61 |
+| Rocks | 100 views | 660 | 32.37 | 0.57 |
+| Rocks | 60 views | 660 | 31.93 | 0.55 |
 
-Full-precision means, standard deviations, standard errors, minima, and maxima
-are stored in
-[`results_summary/full_test_summary.json`](results_summary/full_test_summary.json).
-The summary covers 7,110 reconstructed slices.
-
-The repository also retains the host-neutral validation and compute-ablation
-figures used to audit the frozen protocol:
-
-<p align="center">
-  <img src="assets/compute_ablation.png" width="720"
-       alt="Chain-count and conjugate-gradient compute ablation">
-</p>
-
-## Reproducibility boundary
-
-The cap law is closed form **after one sampler-level calibration**. The factor
-`c` fixes the absolute mapping between the modal surrogate and the numerical
-sampler. It does not determine the relative change between acquisitions:
-with `c` fixed, the variation is prescribed by the noise proxy, prior error,
-and operator gain.
-
-The repository does not claim to make controlled medical data or third-party
-checkpoints freely redistributable. It also does not relabel third-party source
-code as part of this method. The release therefore keeps the
-framework-independent original implementation separate from DM4CT.
+Full-precision means, sample standard deviations, minima, and maxima are stored
+in [`results_summary/current_method_summary.json`](results_summary/current_method_summary.json).
+The file contains 7,110 reconstructions across the 13 acquisition settings.
 
 ## Citation
 
-The paper is under submission. Until bibliographic metadata is final, use the
-entry in [`CITATION.cff`](CITATION.cff). A BibTeX entry with the DOI and final
-page information will be added after publication.
+The manuscript is under review. Until final bibliographic information is
+available, cite the entry in [`CITATION.cff`](CITATION.cff).
 
 ## License
 
-The original software in this repository is released under the
-[MIT License](LICENSE). Data, pretrained models, and external software linked
-from this repository remain subject to their respective terms. See
-[`NOTICE.md`](NOTICE.md) for the redistribution boundary.
+Original software in this repository is released under the
+[MIT License](LICENSE). Data, pretrained models, and external software remain
+subject to their respective terms. See [`NOTICE.md`](NOTICE.md).

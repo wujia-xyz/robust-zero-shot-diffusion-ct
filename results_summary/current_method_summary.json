@@ -1,0 +1,238 @@
+{
+  "schema_version": 2,
+  "method": "Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion CT Reconstruction",
+  "aggregation": "unweighted arithmetic mean over each complete evaluation volume",
+  "standard_deviation_ddof": 1,
+  "total_reconstructions": 7110,
+  "population": {
+    "aapm_per_configuration": 526,
+    "lodoind_per_configuration": 500,
+    "rocks_per_configuration": 660,
+    "interior_total": 7084,
+    "boundary_total": 26
+  },
+  "source_evaluation_sha256": "b8acedb36d8ad68cd14fd5cf1970ae112552ca9d4ca318a66f35c762c65b9bcf",
+  "jobs": {
+    "aapm_i": {
+      "domain": "aapm",
+      "configuration": "i",
+      "count": 526,
+      "psnr": {
+        "mean": 31.737240568680004,
+        "sample_standard_deviation": 0.5258873179512388,
+        "minimum": 30.698797443720306,
+        "maximum": 34.06687087168977
+      },
+      "ssim": {
+        "mean": 0.8727378563126177,
+        "sample_standard_deviation": 0.027458395988950925,
+        "minimum": 0.7860050278455057,
+        "maximum": 0.9049618391698497
+      }
+    },
+    "aapm_ii": {
+      "domain": "aapm",
+      "configuration": "ii",
+      "count": 526,
+      "psnr": {
+        "mean": 27.73634262099165,
+        "sample_standard_deviation": 0.5160036051899356,
+        "minimum": 26.76242243951144,
+        "maximum": 29.575562263408965
+      },
+      "ssim": {
+        "mean": 0.7780282873229202,
+        "sample_standard_deviation": 0.029675562234479685,
+        "minimum": 0.6860316637808389,
+        "maximum": 0.8250371005414115
+      }
+    },
+    "aapm_iii": {
+      "domain": "aapm",
+      "configuration": "iii",
+      "count": 526,
+      "psnr": {
+        "mean": 29.69229718072082,
+        "sample_standard_deviation": 0.3394239138166416,
+        "minimum": 28.238241133601726,
+        "maximum": 30.9950346072802
+      },
+      "ssim": {
+        "mean": 0.8175647160635924,
+        "sample_standard_deviation": 0.028778446903374236,
+        "minimum": 0.7271654178432277,
+        "maximum": 0.8568440973255522
+      }
+    },
+    "aapm_iv": {
+      "domain": "aapm",
+      "configuration": "iv",
+      "count": 526,
+      "psnr": {
+        "mean": 29.41816728423867,
+        "sample_standard_deviation": 0.3628398403566795,
+        "minimum": 28.490934872704614,
+        "maximum": 31.303162647814958
+      },
+      "ssim": {
+        "mean": 0.8178890096909206,
+        "sample_standard_deviation": 0.02996781514667928,
+        "minimum": 0.7251845517903298,
+        "maximum": 0.8600667013845115
+      }
+    },
+    "aapm_v": {
+      "domain": "aapm",
+      "configuration": "v",
+      "count": 526,
+      "psnr": {
+        "mean": 31.058005103818125,
+        "sample_standard_deviation": 0.7145700292287136,
+        "minimum": 28.24648051170934,
+        "maximum": 32.47419879433851
+      },
+      "ssim": {
+        "mean": 0.8622234452331488,
+        "sample_standard_deviation": 0.03006216256718337,
+        "minimum": 0.7710128994519886,
+        "maximum": 0.8972764520117955
+      }
+    },
+    "lodoind_i": {
+      "domain": "lodoind",
+      "configuration": "i",
+      "count": 500,
+      "psnr": {
+        "mean": 23.33175931115045,
+        "sample_standard_deviation": 1.206623425909671,
+        "minimum": 21.4239497630667,
+        "maximum": 25.474767650254613
+      },
+      "ssim": {
+        "mean": 0.6569793561331047,
+        "sample_standard_deviation": 0.029444795126857482,
+        "minimum": 0.6029411294469871,
+        "maximum": 0.7643616949218094
+      }
+    },
+    "lodoind_ii": {
+      "domain": "lodoind",
+      "configuration": "ii",
+      "count": 500,
+      "psnr": {
+        "mean": 19.97999067650959,
+        "sample_standard_deviation": 0.9021912488956855,
+        "minimum": 18.4002891388225,
+        "maximum": 22.917835375824485
+      },
+      "ssim": {
+        "mean": 0.5481091650725728,
+        "sample_standard_deviation": 0.04169148111350967,
+        "minimum": 0.47251319361661187,
+        "maximum": 0.7090486824374188
+      }
+    },
+    "lodoind_iii": {
+      "domain": "lodoind",
+      "configuration": "iii",
+      "count": 500,
+      "psnr": {
+        "mean": 23.437432219566013,
+        "sample_standard_deviation": 0.85503193609609,
+        "minimum": 22.195109537568037,
+        "maximum": 24.966361950563254
+      },
+      "ssim": {
+        "mean": 0.6771426377113818,
+        "sample_standard_deviation": 0.020542792027264733,
+        "minimum": 0.6389472243965671,
+        "maximum": 0.758045505824765
+      }
+    },
+    "lodoind_iv": {
+      "domain": "lodoind",
+      "configuration": "iv",
+      "count": 500,
+      "psnr": {
+        "mean": 22.147248185737872,
+        "sample_standard_deviation": 0.7501799579731793,
+        "minimum": 20.819808860744065,
+        "maximum": 23.8238322938661
+      },
+      "ssim": {
+        "mean": 0.628655990460562,
+        "sample_standard_deviation": 0.026638138633984763,
+        "minimum": 0.5743910980224345,
+        "maximum": 0.7372302257132456
+      }
+    },
+    "lodoind_v": {
+      "domain": "lodoind",
+      "configuration": "v",
+      "count": 500,
+      "psnr": {
+        "mean": 21.477105505705307,
+        "sample_standard_deviation": 0.7955966897655421,
+        "minimum": 19.5753495758483,
+        "maximum": 24.59931406960625
+      },
+      "ssim": {
+        "mean": 0.6145902721457347,
+        "sample_standard_deviation": 0.02933035978137716,
+        "minimum": 0.5540893518834784,
+        "maximum": 0.7592410055263558
+      }
+    },
+    "rocks_200": {
+      "domain": "rocks",
+      "configuration": "200",
+      "count": 660,
+      "psnr": {
+        "mean": 33.001594388686634,
+        "sample_standard_deviation": 2.9711976219758824,
+        "minimum": 24.340388060069877,
+        "maximum": 40.08213570508241
+      },
+      "ssim": {
+        "mean": 0.6078399561994958,
+        "sample_standard_deviation": 0.11034406699610602,
+        "minimum": 0.3021407154400714,
+        "maximum": 0.8370622954008238
+      }
+    },
+    "rocks_100": {
+      "domain": "rocks",
+      "configuration": "100",
+      "count": 660,
+      "psnr": {
+        "mean": 32.36937178109435,
+        "sample_standard_deviation": 2.7533132068332242,
+        "minimum": 24.198131002449298,
+        "maximum": 39.12966744074274
+      },
+      "ssim": {
+        "mean": 0.5709743967169577,
+        "sample_standard_deviation": 0.11884823685393342,
+        "minimum": 0.23606158367179822,
+        "maximum": 0.8223707564252303
+      }
+    },
+    "rocks_60": {
+      "domain": "rocks",
+      "configuration": "60",
+      "count": 660,
+      "psnr": {
+        "mean": 31.933903024386513,
+        "sample_standard_deviation": 2.59123279886811,
+        "minimum": 24.162971590482442,
+        "maximum": 38.42484889402908
+      },
+      "ssim": {
+        "mean": 0.5502204656467978,
+        "sample_standard_deviation": 0.1207622116707591,
+        "minimum": 0.2061748470275326,
+        "maximum": 0.8099216476210641
+      }
+    }
+  }
+}

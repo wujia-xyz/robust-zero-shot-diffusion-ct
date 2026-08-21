@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the release contains host paths, secrets, large files, or drift."""
+"""Fail if public files, method settings, results, or APIs have drifted."""
 
 from __future__ import annotations
 
@@ -11,6 +11,10 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PAPER_TITLE = (
+    "Acquisition-Conditioned Axial Prior Refinement for Zero-Shot Diffusion "
+    "CT Reconstruction"
+)
 MAX_FILE_BYTES = 10 * 1024 * 1024
 TEXT_SUFFIXES = {
     ".cff",
@@ -34,6 +38,11 @@ SECRET_PATTERNS = (
     re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
     re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
 )
+STALE_PUBLIC_PATTERNS = (
+    re.compile("Acquisition-" + "Adaptive Data Consistency"),
+    re.compile(r"\b" + "V" + r"9\b"),
+    re.compile(r"\bv" + "9_", re.IGNORECASE),
+)
 FORBIDDEN_SUFFIXES = {
     ".ckpt",
     ".dcm",
@@ -48,6 +57,7 @@ FORBIDDEN_SUFFIXES = {
 IGNORED_PARTS = {
     ".git",
     ".pytest_cache",
+    ".ruff_cache",
     ".venv",
     "__pycache__",
     "build",
@@ -76,75 +86,137 @@ def validate_files() -> list[str]:
         if path.suffix.lower() not in TEXT_SUFFIXES and path.name != ".gitignore":
             continue
         try:
-            text = path.read_text(encoding="utf-8")
+            content = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
         for pattern in FORBIDDEN_PATH_PATTERNS:
-            if pattern.search(text):
+            if pattern.search(content):
                 errors.append(f"{relative}: contains a host-specific path")
         for pattern in SECRET_PATTERNS:
-            if pattern.search(text):
+            if pattern.search(content):
                 errors.append(f"{relative}: contains a possible secret")
+        for pattern in STALE_PUBLIC_PATTERNS:
+            if pattern.search(content):
+                errors.append(f"{relative}: contains stale internal/method naming")
     return errors
 
 
-def validate_law() -> list[str]:
-    errors: list[str] = []
-    path = ROOT / "configs" / "law_f3_1.json"
+def read_json(relative: str) -> dict:
+    path = ROOT / relative
     value = json.loads(path.read_text(encoding="utf-8"))
-    c = float(value["c_global"])
-    kappa = float(value["kappa"])
-    for name, row in value["configurations"].items():
-        noise_variance = float(row["sigma_n2"])
-        prior_error = float(row["delta"])
+    if not isinstance(value, dict):
+        raise ValueError(f"{relative}: expected an object")
+    return value
+
+
+def validate_method_config() -> list[str]:
+    errors: list[str] = []
+    value = read_json("configs/current_method.json")
+    if value.get("method") != PAPER_TITLE or value.get("schema_version") != 2:
+        errors.append("current_method.json: title or schema version drifted")
+
+    refiner = value["axial_refiner"]
+    sampler = value["sampler"]
+    if int(refiner["parameters"]) != 5_984:
+        errors.append("current_method.json: axial parameter count drifted")
+    expected_sampler = {
+        "stochastic_trajectories": 1,
+        "positive_karras_levels": 100,
+        "proximal_cg_iterations": 6,
+        "interior_state_count": 3,
+        "boundary_state_count": 1,
+    }
+    for key, expected in expected_sampler.items():
+        if int(sampler[key]) != expected:
+            errors.append(f"current_method.json: sampler {key} drifted")
+
+    operating_points = value["operating_points"]
+    if len(operating_points) != 13:
+        errors.append("current_method.json: expected 13 operating points")
+    sigma_min = float(sampler["sigma_min"])
+    epsilon = float(value["controller"]["denominator_epsilon"])
+    for name, row in operating_points.items():
         gain = float(row["gain"])
-        expected_gamma = c * (
-            noise_variance + (kappa * prior_error) ** 2
-        ) / prior_error**2
-        expected_cap = expected_gamma / gain
-        endpoint = float(row["gamma_bar"]) / value["schedule"]["sigma_min"] ** 2
-        if not math.isclose(
-            expected_cap, float(row["gcap_star"]), rel_tol=1e-12, abs_tol=1e-12
-        ):
-            errors.append(f"{name}: stored cap does not satisfy the law")
-        if bool(row["binds"]) != (expected_cap < endpoint):
-            errors.append(f"{name}: operating-state label is inconsistent")
-        if not math.isclose(
-            min(expected_cap, endpoint),
-            float(row["realized_terminal_gcap"]),
-            rel_tol=1e-12,
-            abs_tol=1e-12,
-        ):
-            errors.append(f"{name}: realized terminal cap is inconsistent")
+        gamma_bar = float(row["gamma_bar"])
+        g_cap = float(row["g_cap"])
+        if not all(math.isfinite(item) and item > 0 for item in (gain, gamma_bar, g_cap)):
+            errors.append(f"{name}: nonpositive or nonfinite operating point")
+            continue
+        endpoint = gamma_bar / (sigma_min**2 + epsilon)
+        expected_active = g_cap < endpoint
+        if bool(row["cap_active"]) != expected_active:
+            errors.append(f"{name}: cap-active label is inconsistent")
     return errors
 
 
 def validate_results() -> list[str]:
     errors: list[str] = []
-    path = ROOT / "results_summary" / "full_test_summary.json"
-    value = json.loads(path.read_text(encoding="utf-8"))
-    total = sum(int(row["count"]) for row in value["jobs"].values())
-    if total != int(value["total_reconstructions"]):
-        errors.append(
-            "results_summary: job counts do not match total_reconstructions"
-        )
+    value = read_json("results_summary/current_method_summary.json")
+    if value.get("method") != PAPER_TITLE or value.get("schema_version") != 2:
+        errors.append("current_method_summary.json: title or schema version drifted")
+    jobs = value["jobs"]
+    total = sum(int(row["count"]) for row in jobs.values())
     expected = 5 * 526 + 5 * 500 + 3 * 660
-    if total != expected:
-        errors.append(f"results_summary: expected {expected}, found {total}")
-    if len(value["jobs"]) != 13:
-        errors.append("results_summary: expected 13 acquisition jobs")
+    if total != expected or total != int(value["total_reconstructions"]):
+        errors.append(f"results summary: expected {expected}, found {total}")
+    if len(jobs) != 13:
+        errors.append("results summary: expected 13 acquisition jobs")
+    anchors = {
+        "aapm_i": (31.737240568680004, 0.8727378563126177),
+        "lodoind_i": (23.33175931115045, 0.6569793561331047),
+        "rocks_200": (33.001594388686634, 0.6078399561994958),
+    }
+    for name, (expected_psnr, expected_ssim) in anchors.items():
+        row = jobs[name]
+        if not math.isclose(float(row["psnr"]["mean"]), expected_psnr):
+            errors.append(f"{name}: PSNR anchor drifted")
+        if not math.isclose(float(row["ssim"]["mean"]), expected_ssim):
+            errors.append(f"{name}: SSIM anchor drifted")
+    for name, row in jobs.items():
+        for metric in ("psnr", "ssim"):
+            statistics = row[metric]
+            required = {
+                "mean",
+                "sample_standard_deviation",
+                "minimum",
+                "maximum",
+            }
+            if set(statistics) != required:
+                errors.append(f"{name}: incomplete {metric} statistics")
+            if not all(math.isfinite(float(number)) for number in statistics.values()):
+                errors.append(f"{name}: nonfinite {metric} statistic")
+    return errors
+
+
+def validate_python_api() -> list[str]:
+    errors: list[str] = []
+    try:
+        import robust_ct
+    except Exception as error:  # pragma: no cover - release diagnostic
+        return [f"robust_ct import failed: {error}"]
+    if robust_ct.__version__ != "0.2.0":
+        errors.append("robust_ct: package version drifted")
+    if robust_ct.AXIAL_AVAILABLE:
+        refiner = robust_ct.AxialCenterX0Refiner()
+        if robust_ct.parameter_count(refiner) != 5_984:
+            errors.append("robust_ct: instantiated refiner parameter count drifted")
     return errors
 
 
 def main() -> int:
-    errors = validate_files() + validate_law() + validate_results()
+    errors = (
+        validate_files()
+        + validate_method_config()
+        + validate_results()
+        + validate_python_api()
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
     print(
-        f"release validation passed: {len(iter_release_files())} files, "
-        "law and 7,110-result summary are internally consistent"
+        f"release validation passed: {len(iter_release_files())} public files, "
+        "current 13-configuration method and 7,110-result summary are consistent"
     )
     return 0
 
