@@ -16,9 +16,9 @@ the center reconstruction is retained.
 
 ## Method
 
-For an interior center location (z), the reverse state is
-(mathcal X_t=\{x_{z-1,t},x_{z,t},x_{z+1,t}\}). The frozen 2-D prior predicts
-(epsilon_{	heta,j,t}) for each (j\in\{z-1,z,z+1\}). Two clean-image
+For an interior center location \(z\), the reverse state is
+\(\mathcal X_t=\{x_{z-1,t},x_{z,t},x_{z+1,t}\}\). The frozen 2-D prior predicts
+\(\epsilon_{\theta,j,t}\) for each \(j\in\{z-1,z,z+1\}\). Two clean-image
 coordinates are then formed:
 
 \[

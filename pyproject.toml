@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "robust-zero-shot-ct"
-version = "0.2.0"
+version = "0.2.1"
 description = "Acquisition-conditioned axial prior refinement for zero-shot diffusion CT reconstruction"
 readme = "README.md"
 license = {file = "LICENSE"}
